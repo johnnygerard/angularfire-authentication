@@ -4,9 +4,10 @@ import {
   withEventReplay,
 } from "@angular/platform-browser";
 import { provideRouter } from "@angular/router";
+import { environment } from "../environments/environment";
 import { routes } from "./app.routes";
 import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
-import { getAuth, provideAuth } from "@angular/fire/auth";
+import { connectAuthEmulator, getAuth, provideAuth } from "@angular/fire/auth";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,6 +24,13 @@ export const appConfig: ApplicationConfig = {
         messagingSenderId: "922614773049",
       }),
     ),
-    provideAuth(() => getAuth()),
+    provideAuth(() => {
+      const auth = getAuth();
+
+      if (environment.name === "development")
+        connectAuthEmulator(auth, "http://localhost:9099");
+
+      return auth;
+    }),
   ],
 };
