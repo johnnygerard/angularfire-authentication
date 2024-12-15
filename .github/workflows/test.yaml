@@ -16,6 +16,8 @@ jobs:
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
       - name: Start emulators
-        run: npm run start:emulators
+        run: npm run start:emulators &
+      - name: Wait for the auth emulator to be ready
+        run: npx wait-on http://localhost:9099
       - name: Run tests
         run: npm run test:ci
