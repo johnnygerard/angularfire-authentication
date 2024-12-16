@@ -17,7 +17,7 @@ export const passwordValidator = (
 
     // Mocking is required because of the following error:
     // FirebaseError: auth/identitytoolkit.getpasswordpolicy-is-not-implemented-in-the-auth-emulator
-    if (environment.name === "development") {
+    if (environment.useEmulators) {
       const meetsMinPasswordLength = password.length >= 8;
       return meetsMinPasswordLength
         ? null
