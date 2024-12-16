@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EnvironmentInjector,
+  inject,
+} from "@angular/core";
+import { Auth } from "@angular/fire/auth";
 import {
   NonNullableFormBuilder,
   ReactiveFormsModule,
@@ -6,6 +12,7 @@ import {
 } from "@angular/forms";
 import { Lock, LucideAngularModule, Mail, User } from "lucide-angular";
 import { AuthService } from "../../services/auth.service";
+import { passwordValidator } from "../../validators/password-validator";
 
 @Component({
   selector: "app-registration-form",
@@ -22,7 +29,11 @@ export class RegistrationFormComponent {
   form = inject(NonNullableFormBuilder).group({
     name: ["", Validators.required],
     email: ["", [Validators.required, Validators.email]],
-    password: ["", Validators.required],
+    password: [
+      "",
+      Validators.required,
+      passwordValidator(inject(Auth), inject(EnvironmentInjector)),
+    ],
   });
 
   #auth = inject(AuthService);
