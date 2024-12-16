@@ -1,3 +1,35 @@
-<h1 class="">404 Not Found</h1>
-<p class="">Sorry, the page you are looking for does not exist.</p>
-<a class="" routerLink="/"> Back to Home </a>
+<div
+  class="mx-auto flex min-h-[80vh] max-w-7xl items-center justify-center px-4 sm:px-6 lg:px-8"
+>
+  <div class="text-center">
+    <div class="space-y-2">
+      <h1 class="text-9xl font-bold text-gray-200">404</h1>
+      <h2 class="text-3xl font-semibold text-gray-900">Page not found</h2>
+      <p class="mx-auto max-w-md text-gray-600">
+        Sorry, we couldn't find the page you're looking for. Perhaps you've
+        mistyped the URL? Be sure to check your spelling.
+      </p>
+    </div>
+
+    <div class="mt-10 space-y-4">
+      <a
+        class="inline-flex w-full items-center justify-center rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 sm:w-auto"
+        routerLink="/"
+      >
+        <i-lucide [img]="I_HOME" class="mr-2 h-4 w-4"></i-lucide>
+        Back to Home
+      </a>
+
+      <div class="text-sm text-gray-500">
+        <button
+          (click)="goBack()"
+          class="inline-flex items-center text-blue-600 hover:text-blue-500"
+          type="button"
+        >
+          <i-lucide [img]="I_ARROW_LEFT" class="mr-1 h-4 w-4"></i-lucide>
+          Go back
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
