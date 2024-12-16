@@ -1,3 +1,4 @@
+import { AuthService } from "@/app/services/auth.service";
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import {
@@ -7,7 +8,6 @@ import {
   UserPlus,
   Users,
 } from "lucide-angular";
-import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: "app-home-page",

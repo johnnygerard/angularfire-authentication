@@ -1,3 +1,4 @@
+import { environment } from "@/environments/environment";
 import { Injector, runInInjectionContext } from "@angular/core";
 import { Auth, validatePassword } from "@angular/fire/auth";
 import {
@@ -5,7 +6,6 @@ import {
   AsyncValidatorFn,
   ValidationErrors,
 } from "@angular/forms";
-import { environment } from "../../environments/environment";
 
 export const passwordValidator = (
   auth: Auth,

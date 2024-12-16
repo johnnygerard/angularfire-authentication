@@ -1,3 +1,6 @@
+import { routes } from "@/app/app.routes";
+import { firebaseConfig } from "@/app/firebase.config";
+import { environment } from "@/environments/environment";
 import { ApplicationConfig, provideZoneChangeDetection } from "@angular/core";
 import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
 import { connectAuthEmulator, getAuth, provideAuth } from "@angular/fire/auth";
@@ -6,9 +9,6 @@ import {
   withEventReplay,
 } from "@angular/platform-browser";
 import { provideRouter } from "@angular/router";
-import { environment } from "../environments/environment";
-import { routes } from "./app.routes";
-import { firebaseConfig } from "./firebase.config";
 
 export const appConfig: ApplicationConfig = {
   providers: [

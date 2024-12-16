@@ -1,9 +1,9 @@
+import { firebaseConfig } from "@/app/firebase.config";
+import { AuthService } from "@/app/services/auth.service";
 import { TestBed } from "@angular/core/testing";
 import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
 import { connectAuthEmulator, getAuth, provideAuth } from "@angular/fire/auth";
 import { faker } from "@faker-js/faker";
-import { firebaseConfig } from "../firebase.config";
-import { AuthService } from "./auth.service";
 
 describe("AuthService", () => {
   let service: AuthService;

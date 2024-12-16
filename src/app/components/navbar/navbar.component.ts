@@ -1,7 +1,7 @@
+import { AuthService } from "@/app/services/auth.service";
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { House, LogOut, LucideAngularModule } from "lucide-angular";
-import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: "app-navbar",

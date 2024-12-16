@@ -1,3 +1,5 @@
+import { AuthService } from "@/app/services/auth.service";
+import { passwordValidator } from "@/app/validators/password-validator";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -11,8 +13,6 @@ import {
   Validators,
 } from "@angular/forms";
 import { Lock, LucideAngularModule, Mail, User } from "lucide-angular";
-import { AuthService } from "../../services/auth.service";
-import { passwordValidator } from "../../validators/password-validator";
 
 @Component({
   selector: "app-registration-form",
