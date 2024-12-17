@@ -1,13 +1,13 @@
-import { Notification } from "@/app/types/notification";
+import { AppNotification } from "@/app/types/app-notification";
 import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 class NotificationService {
-  #notification$ = new Subject<Notification>();
+  #notification$ = new Subject<AppNotification>();
   #nextId = 0;
 
-  get notification$(): Observable<Notification> {
+  get notification$(): Observable<AppNotification> {
     return this.#notification$.asObservable();
   }
 
@@ -19,7 +19,7 @@ class NotificationService {
     this.#push({ id: this.#nextId++, message, timeout: 7000, type: "success" });
   }
 
-  #push(value: Notification): void {
+  #push(value: AppNotification): void {
     this.#notification$.next(value);
   }
 }

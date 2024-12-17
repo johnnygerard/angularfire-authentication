@@ -1,4 +1,4 @@
-export type Notification = {
+export type AppNotification = {
   id: number;
   message: string;
   timeout: number;
