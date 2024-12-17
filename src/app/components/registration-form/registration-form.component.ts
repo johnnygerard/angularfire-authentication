@@ -1,3 +1,4 @@
+import { ValidationErrorsPipe } from "@/app/pipes/validation-errors.pipe";
 import { AuthService } from "@/app/services/auth.service";
 import { passwordValidator } from "@/app/validators/password-validator";
 import {
@@ -8,6 +9,7 @@ import {
 } from "@angular/core";
 import { Auth } from "@angular/fire/auth";
 import {
+  AbstractControl,
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
@@ -16,7 +18,7 @@ import { Lock, LucideAngularModule, Mail, User } from "lucide-angular";
 
 @Component({
   selector: "app-registration-form",
-  imports: [ReactiveFormsModule, LucideAngularModule],
+  imports: [ReactiveFormsModule, LucideAngularModule, ValidationErrorsPipe],
   templateUrl: "./registration-form.component.html",
   host: { class: "block" },
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -47,5 +49,11 @@ export class RegistrationFormComponent {
 
   async loginWithGoogle(): Promise<void> {
     throw new Error("Not implemented");
+  }
+
+  showErrors(control: AbstractControl, isFormSubmitted: boolean): boolean {
+    return (
+      control.invalid && (control.touched || control.dirty || isFormSubmitted)
+    );
   }
 }

@@ -1,5 +1,10 @@
 <div class="w-full max-w-md">
-  <form (ngSubmit)="onSubmit()" [formGroup]="form" class="space-y-6">
+  <form
+    #ngForm="ngForm"
+    (ngSubmit)="onSubmit()"
+    [formGroup]="form"
+    class="space-y-6"
+  >
     <div>
       <label class="block text-sm font-medium text-gray-700" for="name">
         Full Name
@@ -21,6 +26,11 @@
           type="text"
         />
       </div>
+      @if (showErrors(form.controls.name, ngForm["submitted"])) {
+        <p class="mt-1 text-sm text-red-600">
+          {{ form.controls.name.errors! | validationErrors }}
+        </p>
+      }
     </div>
 
     <div>
@@ -40,9 +50,15 @@
           id="email"
           placeholder="you@example.com"
           required
+          spellcheck="false"
           type="email"
         />
       </div>
+      @if (showErrors(form.controls.email, ngForm["submitted"])) {
+        <p class="mt-1 text-sm text-red-600">
+          {{ form.controls.email.errors! | validationErrors }}
+        </p>
+      }
     </div>
 
     <div>
@@ -65,6 +81,11 @@
           type="password"
         />
       </div>
+      @if (showErrors(form.controls.password, ngForm["submitted"])) {
+        <p class="mt-1 text-sm text-red-600">
+          {{ form.controls.password.errors! | validationErrors }}
+        </p>
+      }
     </div>
 
     <div>
