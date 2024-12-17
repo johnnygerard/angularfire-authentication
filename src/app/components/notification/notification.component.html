@@ -1,10 +1,22 @@
 <div
-  [class]="{
-    'border border-green-400 bg-green-100 text-green-700': type() === 'success',
-    'border border-red-400 bg-red-100 text-red-700': type() === 'error',
-  }"
-  class="mb-4 rounded-lg p-4 text-sm"
+  [class]="
+    type() === 'success'
+      ? 'border-green-400 bg-green-100 text-green-700'
+      : 'border-red-400 bg-red-100 text-red-700'
+  "
+  class="flex items-center gap-2 rounded-lg border p-4 text-sm"
   role="alert"
 >
-  {{ message() }}
+  @switch (type()) {
+    @case ("success") {
+      <i-lucide
+        [img]="I_CHECK_CIRCLE"
+        class="h-5 w-5 text-green-500"
+      ></i-lucide>
+    }
+    @case ("error") {
+      <i-lucide [img]="I_ALERT_CIRCLE" class="h-5 w-5 text-red-500"></i-lucide>
+    }
+  }
+  <span>{{ message() }}</span>
 </div>
