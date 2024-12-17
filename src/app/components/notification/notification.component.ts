@@ -9,5 +9,6 @@ import { ChangeDetectionStrategy, Component, input } from "@angular/core";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationComponent {
-  notification = input.required<AppNotification>();
+  message = input.required<AppNotification["message"]>();
+  type = input.required<AppNotification["type"]>();
 }
