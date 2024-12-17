@@ -1,5 +1,6 @@
 import { ValidationErrorsPipe } from "@/app/pipes/validation-errors.pipe";
 import { AuthService } from "@/app/services/auth.service";
+import { showErrors } from "@/app/utils/show-errors";
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import {
   AbstractControl,
@@ -43,8 +44,6 @@ export class LoginFormComponent {
   }
 
   showErrors(control: AbstractControl, isFormSubmitted: boolean): boolean {
-    return (
-      control.invalid && (control.touched || control.dirty || isFormSubmitted)
-    );
+    return showErrors(control, isFormSubmitted);
   }
 }

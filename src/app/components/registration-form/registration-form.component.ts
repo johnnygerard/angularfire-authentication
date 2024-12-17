@@ -1,5 +1,6 @@
 import { ValidationErrorsPipe } from "@/app/pipes/validation-errors.pipe";
 import { AuthService } from "@/app/services/auth.service";
+import { showErrors } from "@/app/utils/show-errors";
 import { passwordValidator } from "@/app/validators/password-validator";
 import {
   ChangeDetectionStrategy,
@@ -55,8 +56,6 @@ export class RegistrationFormComponent {
   }
 
   showErrors(control: AbstractControl, isFormSubmitted: boolean): boolean {
-    return (
-      control.invalid && (control.touched || control.dirty || isFormSubmitted)
-    );
+    return showErrors(control, isFormSubmitted);
   }
 }
