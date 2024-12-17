@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 
 @Injectable({ providedIn: "root" })
-class NotificationService {
+export class NotificationService {
   #notification$ = new Subject<AppNotification>();
   #nextId = 0;
 
