@@ -25,4 +25,8 @@ export class HomePageComponent {
 
   #auth = inject(AuthService);
   user = this.#auth.user;
+
+  async sendVerificationEmail(): Promise<void> {
+    await this.#auth.sendVerificationEmail();
+  }
 }

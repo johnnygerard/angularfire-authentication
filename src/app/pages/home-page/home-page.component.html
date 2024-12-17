@@ -32,6 +32,14 @@
                 : "Your account is not verified"
             }}
           </p>
+          @if (!user.emailVerified) {
+            <button
+              (click)="sendVerificationEmail()"
+              class="mt-4 inline-flex items-center rounded-md border border-transparent bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700"
+            >
+              Send Verification Email
+            </button>
+          }
         </div>
       </div>
     </div>

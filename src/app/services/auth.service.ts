@@ -9,6 +9,7 @@ import {
 import {
   Auth,
   createUserWithEmailAndPassword,
+  sendEmailVerification,
   signInWithEmailAndPassword,
   User,
 } from "@angular/fire/auth";
@@ -57,6 +58,19 @@ export class AuthService {
         await this.#auth.signOut();
       } catch (e) {
         throw new Error("User logout failed", { cause: e });
+      }
+    });
+  }
+
+  async sendVerificationEmail(): Promise<void> {
+    await runInInjectionContext(this.#injector, async () => {
+      const user = this.user();
+      if (user === null) throw new Error("User is not logged in");
+
+      try {
+        await sendEmailVerification(user);
+      } catch (e) {
+        throw new Error("Email verification failed", { cause: e });
       }
     });
   }
