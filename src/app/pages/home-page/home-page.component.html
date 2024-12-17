@@ -15,13 +15,23 @@
           </p>
         </div>
 
-        <div class="rounded-lg bg-green-50 p-6">
+        <div
+          class="rounded-lg p-6"
+          [class]="user.emailVerified ? 'bg-green-50' : 'bg-red-50'"
+        >
           <i-lucide
             [img]="I_USERS"
-            class="mb-4 h-8 w-8 text-green-600"
+            class="mb-4 h-8 w-8"
+            [class]="user.emailVerified ? 'text-green-600' : 'text-red-600'"
           ></i-lucide>
           <h3 class="mb-2 text-lg font-semibold">Account Status</h3>
-          <p class="text-gray-600">Your account is active and verified</p>
+          <p class="text-gray-600">
+            {{
+              user.emailVerified
+                ? "Your account is active and verified"
+                : "Your account is not verified"
+            }}
+          </p>
         </div>
       </div>
     </div>
