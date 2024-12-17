@@ -1,0 +1,96 @@
+<div class="w-full max-w-md">
+  <form
+    #ngForm="ngForm"
+    (ngSubmit)="onSubmit()"
+    [formGroup]="form"
+    class="space-y-6"
+  >
+    <div>
+      <label class="block text-sm font-medium text-gray-700" for="email">
+        Email
+      </label>
+      <div class="relative mt-1">
+        <div
+          class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+        >
+          <i-lucide [img]="I_MAIL" class="h-5 w-5 text-gray-400"></i-lucide>
+        </div>
+        <input
+          autocomplete="email"
+          class="block w-full rounded-md border-gray-300 pl-10 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          formControlName="email"
+          id="email"
+          placeholder="you@example.com"
+          required
+          spellcheck="false"
+          type="email"
+        />
+      </div>
+      @if (showErrors(form.controls.email, ngForm["submitted"])) {
+        <p class="mt-1 text-sm text-red-600">
+          {{ form.controls.email.errors! | validationErrors }}
+        </p>
+      }
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700" for="password">
+        Password
+      </label>
+      <div class="relative mt-1">
+        <div
+          class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+        >
+          <i-lucide [img]="I_LOCK" class="h-5 w-5 text-gray-400"></i-lucide>
+        </div>
+        <input
+          autocomplete="current-password"
+          class="block w-full rounded-md border-gray-300 pl-10 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          formControlName="password"
+          id="password"
+          placeholder="••••••••"
+          required
+          type="password"
+        />
+      </div>
+      @if (showErrors(form.controls.password, ngForm["submitted"])) {
+        <p class="mt-1 text-sm text-red-600">
+          {{ form.controls.password.errors! | validationErrors }}
+        </p>
+      }
+    </div>
+
+    <div>
+      <button
+        class="flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        type="submit"
+      >
+        Sign in
+      </button>
+    </div>
+
+    <div class="relative">
+      <div class="absolute inset-0 flex items-center">
+        <div class="w-full border-t border-gray-300"></div>
+      </div>
+      <div class="relative flex justify-center text-sm">
+        <span class="bg-white px-2 text-gray-500">Or continue with</span>
+      </div>
+    </div>
+
+    <button
+      (click)="loginWithGoogle()"
+      class="flex w-full items-center justify-center gap-3 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+      type="button"
+    >
+      <img
+        alt=""
+        class="h-5 w-5"
+        height="48"
+        src="/images/google-logo.svg"
+        width="48"
+      />
+      Google
+    </button>
+  </form>
+</div>
