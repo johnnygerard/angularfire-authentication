@@ -37,7 +37,7 @@ export class LoginFormComponent {
   }
 
   async loginWithGoogle(): Promise<void> {
-    throw new Error("Not implemented");
+    await this.#auth.logInWithGoogle();
   }
 
   showErrors(control: AbstractControl, isFormSubmitted: boolean): boolean {

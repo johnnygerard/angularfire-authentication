@@ -48,8 +48,8 @@ export class RegistrationFormComponent {
     await this.#auth.register(email, password);
   }
 
-  async loginWithGoogle(): Promise<void> {
-    throw new Error("Not implemented");
+  async registerWithGoogle(): Promise<void> {
+    await this.#auth.registerWithGoogle();
   }
 
   showErrors(control: AbstractControl, isFormSubmitted: boolean): boolean {

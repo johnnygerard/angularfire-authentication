@@ -13,8 +13,10 @@ import {
   Auth,
   AuthErrorCodes,
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   sendEmailVerification,
   signInWithEmailAndPassword,
+  signInWithPopup,
   User,
 } from "@angular/fire/auth";
 import { Router } from "@angular/router";
@@ -29,6 +31,7 @@ export class AuthService {
 
   #user = signal<User | null>(null);
   #auth = inject(Auth);
+  #googleIdP = new GoogleAuthProvider();
   #injector = inject(EnvironmentInjector);
   #notifier = inject(NotificationService);
   #router = inject(Router);
@@ -65,6 +68,19 @@ export class AuthService {
     });
   }
 
+  async registerWithGoogle(): Promise<void> {
+    await runInInjectionContext(this.#injector, async () => {
+      try {
+        await signInWithPopup(this.#auth, this.#googleIdP);
+        this.#notifier.sendSuccess(USER_MESSAGE.REGISTRATION_SUCCESS);
+        await this.#router.navigateByUrl(this.REGISTRATION_REDIRECT);
+      } catch (e) {
+        console.error(e);
+        this.#notifier.sendError(USER_MESSAGE.REGISTRATION_FAILED);
+      }
+    });
+  }
+
   async logIn(email: string, password: string): Promise<void> {
     await runInInjectionContext(this.#injector, async () => {
       try {
@@ -82,6 +98,19 @@ export class AuthService {
           return;
         }
 
+        this.#notifier.sendError(USER_MESSAGE.LOGIN_FAILED);
+      }
+    });
+  }
+
+  async logInWithGoogle(): Promise<void> {
+    await runInInjectionContext(this.#injector, async () => {
+      try {
+        await signInWithPopup(this.#auth, this.#googleIdP);
+        this.#notifier.sendSuccess(USER_MESSAGE.LOGIN_SUCCESS);
+        await this.#router.navigateByUrl(this.LOGIN_REDIRECT);
+      } catch (e) {
+        console.error(e);
         this.#notifier.sendError(USER_MESSAGE.LOGIN_FAILED);
       }
     });
