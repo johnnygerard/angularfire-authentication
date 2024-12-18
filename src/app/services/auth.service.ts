@@ -8,8 +8,10 @@ import {
   Signal,
   signal,
 } from "@angular/core";
+import { FirebaseError } from "@angular/fire/app";
 import {
   Auth,
+  AuthErrorCodes,
   createUserWithEmailAndPassword,
   sendEmailVerification,
   signInWithEmailAndPassword,
@@ -48,6 +50,14 @@ export class AuthService {
         this.#notifier.sendSuccess(USER_MESSAGE.REGISTRATION_SUCCESS);
         await this.#router.navigateByUrl(this.REGISTRATION_REDIRECT);
       } catch (e) {
+        if (
+          e instanceof FirebaseError &&
+          e.code === AuthErrorCodes.EMAIL_EXISTS
+        ) {
+          this.#notifier.sendError(USER_MESSAGE.EMAIL_EXISTS);
+          return;
+        }
+
         throw new Error("User registration failed", { cause: e });
       }
     });
