@@ -1,25 +1,36 @@
-import { HomePageComponent } from "@/app/pages/home-page/home-page.component";
-import { LoginPageComponent } from "@/app/pages/login-page/login-page.component";
-import { NotFoundPageComponent } from "@/app/pages/not-found-page/not-found-page.component";
-import { RegistrationPageComponent } from "@/app/pages/registration-page/registration-page.component";
 import { Routes } from "@angular/router";
 
 export const routes: Routes = [
   {
     path: "",
     pathMatch: "full",
-    component: HomePageComponent,
+    loadComponent: async () =>
+      (await import("@/app/pages/home-page/home-page.component"))
+        .HomePageComponent,
+    title: "Auth Demo",
   },
   {
     path: "register",
-    component: RegistrationPageComponent,
+    loadComponent: async () =>
+      (
+        await import(
+          "@/app/pages/registration-page/registration-page.component"
+        )
+      ).RegistrationPageComponent,
+    title: "Register",
   },
   {
     path: "sign-in",
-    component: LoginPageComponent,
+    loadComponent: async () =>
+      (await import("@/app/pages/login-page/login-page.component"))
+        .LoginPageComponent,
+    title: "Sign In",
   },
   {
     path: "**",
-    component: NotFoundPageComponent,
+    loadComponent: async () =>
+      (await import("@/app/pages/not-found-page/not-found-page.component"))
+        .NotFoundPageComponent,
+    title: "Not Found",
   },
 ];
