@@ -15,7 +15,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
-import { Router } from "@angular/router";
 import { Lock, LucideAngularModule, Mail, User } from "lucide-angular";
 
 @Component({
@@ -41,14 +40,12 @@ export class RegistrationFormComponent {
   });
 
   #auth = inject(AuthService);
-  #router = inject(Router);
 
   async onSubmit(): Promise<void> {
     if (!this.form.valid) return;
 
     const { email, password } = this.form.getRawValue();
     await this.#auth.register(email, password);
-    await this.#router.navigateByUrl("/");
   }
 
   async loginWithGoogle(): Promise<void> {

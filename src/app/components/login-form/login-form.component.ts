@@ -8,7 +8,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
-import { Router } from "@angular/router";
 import { Lock, LucideAngularModule, Mail } from "lucide-angular";
 
 @Component({
@@ -29,14 +28,12 @@ export class LoginFormComponent {
   });
 
   #auth = inject(AuthService);
-  #router = inject(Router);
 
   async onSubmit(): Promise<void> {
     if (!this.form.valid) return;
 
     const { email, password } = this.form.getRawValue();
     await this.#auth.logIn(email, password);
-    await this.#router.navigateByUrl("/");
   }
 
   async loginWithGoogle(): Promise<void> {

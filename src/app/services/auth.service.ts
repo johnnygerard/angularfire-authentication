@@ -13,14 +13,19 @@ import {
   signInWithEmailAndPassword,
   User,
 } from "@angular/fire/auth";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
+  readonly LOGIN_REDIRECT = "/";
+  readonly REGISTRATION_REDIRECT = "/";
+
   #user = signal<User | null>(null);
   #auth = inject(Auth);
   #injector = inject(EnvironmentInjector);
+  #router = inject(Router);
 
   constructor() {
     this.#auth.onAuthStateChanged((user) => {
@@ -36,6 +41,7 @@ export class AuthService {
     await runInInjectionContext(this.#injector, async () => {
       try {
         await createUserWithEmailAndPassword(this.#auth, email, password);
+        await this.#router.navigateByUrl(this.REGISTRATION_REDIRECT);
       } catch (e) {
         throw new Error("User registration failed", { cause: e });
       }
@@ -46,6 +52,7 @@ export class AuthService {
     await runInInjectionContext(this.#injector, async () => {
       try {
         await signInWithEmailAndPassword(this.#auth, email, password);
+        await this.#router.navigateByUrl(this.LOGIN_REDIRECT);
       } catch (e) {
         throw new Error("User login failed", { cause: e });
       }
