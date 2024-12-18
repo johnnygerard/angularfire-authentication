@@ -47,8 +47,6 @@ export class AuthService {
     await runInInjectionContext(this.#injector, async () => {
       try {
         await createUserWithEmailAndPassword(this.#auth, email, password);
-        this.#notifier.sendSuccess(USER_MESSAGE.REGISTRATION_SUCCESS);
-        await this.#router.navigateByUrl(this.REGISTRATION_REDIRECT);
       } catch (e) {
         if (
           e instanceof FirebaseError &&
@@ -60,6 +58,9 @@ export class AuthService {
 
         throw new Error("User registration failed", { cause: e });
       }
+
+      this.#notifier.sendSuccess(USER_MESSAGE.REGISTRATION_SUCCESS);
+      await this.#router.navigateByUrl(this.REGISTRATION_REDIRECT);
     });
   }
 
@@ -67,11 +68,12 @@ export class AuthService {
     await runInInjectionContext(this.#injector, async () => {
       try {
         await signInWithEmailAndPassword(this.#auth, email, password);
-        this.#notifier.sendSuccess(USER_MESSAGE.LOGIN_SUCCESS);
-        await this.#router.navigateByUrl(this.LOGIN_REDIRECT);
       } catch (e) {
         throw new Error("User login failed", { cause: e });
       }
+
+      this.#notifier.sendSuccess(USER_MESSAGE.LOGIN_SUCCESS);
+      await this.#router.navigateByUrl(this.LOGIN_REDIRECT);
     });
   }
 
@@ -79,11 +81,12 @@ export class AuthService {
     await runInInjectionContext(this.#injector, async () => {
       try {
         await this.#auth.signOut();
-        this.#notifier.sendSuccess(USER_MESSAGE.LOGOUT_SUCCESS);
-        await this.#router.navigateByUrl(this.LOGOUT_REDIRECT);
       } catch (e) {
         throw new Error("User logout failed", { cause: e });
       }
+
+      this.#notifier.sendSuccess(USER_MESSAGE.LOGOUT_SUCCESS);
+      await this.#router.navigateByUrl(this.LOGOUT_REDIRECT);
     });
   }
 
