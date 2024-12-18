@@ -20,6 +20,7 @@ import { Router } from "@angular/router";
 })
 export class AuthService {
   readonly LOGIN_REDIRECT = "/";
+  readonly LOGOUT_REDIRECT = "/";
   readonly REGISTRATION_REDIRECT = "/";
 
   #user = signal<User | null>(null);
@@ -63,6 +64,7 @@ export class AuthService {
     await runInInjectionContext(this.#injector, async () => {
       try {
         await this.#auth.signOut();
+        await this.#router.navigateByUrl(this.LOGOUT_REDIRECT);
       } catch (e) {
         throw new Error("User logout failed", { cause: e });
       }
