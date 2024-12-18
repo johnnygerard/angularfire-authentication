@@ -5,6 +5,7 @@ export const USER_MESSAGE = {
   LOGOUT_SUCCESS: "You’ve successfully signed out. Have a nice day!",
   REGISTRATION_SUCCESS: "Your account has been created. Welcome aboard!",
   UNKNOWN_ERROR: "An unknown error has occurred. Please try again later.",
+  INVALID_LOGIN_CREDENTIALS: "Invalid email or password. Please try again.",
 } as const;
 
 export type UserMessage = (typeof USER_MESSAGE)[keyof typeof USER_MESSAGE];

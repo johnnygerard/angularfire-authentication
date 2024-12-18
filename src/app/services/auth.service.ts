@@ -69,6 +69,14 @@ export class AuthService {
       try {
         await signInWithEmailAndPassword(this.#auth, email, password);
       } catch (e) {
+        if (
+          e instanceof FirebaseError &&
+          e.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS
+        ) {
+          this.#notifier.sendError(USER_MESSAGE.INVALID_LOGIN_CREDENTIALS);
+          return;
+        }
+
         throw new Error("User login failed", { cause: e });
       }
 
