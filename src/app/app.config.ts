@@ -1,7 +1,12 @@
 import { routes } from "@/app/app.routes";
 import { firebaseConfig } from "@/app/firebase.config";
+import { GlobalErrorHandler } from "@/app/global-error-handler";
 import { environment } from "@/environments/environment";
-import { ApplicationConfig, provideZoneChangeDetection } from "@angular/core";
+import {
+  ApplicationConfig,
+  ErrorHandler,
+  provideZoneChangeDetection,
+} from "@angular/core";
 import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
 import { connectAuthEmulator, getAuth, provideAuth } from "@angular/fire/auth";
 import {
@@ -16,6 +21,10 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler,
+    },
     provideAuth(() => {
       const auth = getAuth();
 
