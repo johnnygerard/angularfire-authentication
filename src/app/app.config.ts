@@ -1,4 +1,12 @@
-import { ApplicationConfig, provideZoneChangeDetection } from "@angular/core";
+import { routes } from "@/app/app.routes";
+import { firebaseConfig } from "@/app/firebase.config";
+import { GlobalErrorHandler } from "@/app/global-error-handler";
+import { environment } from "@/environments/environment";
+import {
+  ApplicationConfig,
+  ErrorHandler,
+  provideZoneChangeDetection,
+} from "@angular/core";
 import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
 import { connectAuthEmulator, getAuth, provideAuth } from "@angular/fire/auth";
 import {
@@ -6,9 +14,6 @@ import {
   withEventReplay,
 } from "@angular/platform-browser";
 import { provideRouter } from "@angular/router";
-import { environment } from "../environments/environment";
-import { routes } from "./app.routes";
-import { firebaseConfig } from "./firebase.config";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,11 +21,17 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler,
+    },
     provideAuth(() => {
       const auth = getAuth();
 
-      if (environment.name === "development")
-        connectAuthEmulator(auth, "http://localhost:9099");
+      if (environment.useEmulators)
+        connectAuthEmulator(auth, "http://localhost:9099", {
+          disableWarnings: true,
+        });
 
       return auth;
     }),

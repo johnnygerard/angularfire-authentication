@@ -1,3 +1,6 @@
-export const environment = {
+import { AngularEnvironment } from "@/environments/angular-environment";
+
+export const environment: AngularEnvironment = {
   name: "development",
+  useEmulators: true,
 };

@@ -1,0 +1,8 @@
+<div class="flex min-w-80 flex-col gap-2">
+  @for (notification of visibleList(); track notification.id) {
+    <app-notification
+      [message]="notification.message"
+      [type]="notification.type"
+    />
+  }
+</div>
