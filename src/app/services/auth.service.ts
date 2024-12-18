@@ -47,7 +47,11 @@ export class AuthService {
     await runInInjectionContext(this.#injector, async () => {
       try {
         await createUserWithEmailAndPassword(this.#auth, email, password);
+        this.#notifier.sendSuccess(USER_MESSAGE.REGISTRATION_SUCCESS);
+        await this.#router.navigateByUrl(this.REGISTRATION_REDIRECT);
       } catch (e) {
+        console.error(e);
+
         if (
           e instanceof FirebaseError &&
           e.code === AuthErrorCodes.EMAIL_EXISTS
@@ -56,11 +60,8 @@ export class AuthService {
           return;
         }
 
-        throw new Error("User registration failed", { cause: e });
+        this.#notifier.sendError(USER_MESSAGE.REGISTRATION_FAILED);
       }
-
-      this.#notifier.sendSuccess(USER_MESSAGE.REGISTRATION_SUCCESS);
-      await this.#router.navigateByUrl(this.REGISTRATION_REDIRECT);
     });
   }
 
@@ -68,7 +69,11 @@ export class AuthService {
     await runInInjectionContext(this.#injector, async () => {
       try {
         await signInWithEmailAndPassword(this.#auth, email, password);
+        this.#notifier.sendSuccess(USER_MESSAGE.LOGIN_SUCCESS);
+        await this.#router.navigateByUrl(this.LOGIN_REDIRECT);
       } catch (e) {
+        console.error(e);
+
         if (
           e instanceof FirebaseError &&
           e.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS
@@ -77,11 +82,8 @@ export class AuthService {
           return;
         }
 
-        throw new Error("User login failed", { cause: e });
+        this.#notifier.sendError(USER_MESSAGE.LOGIN_FAILED);
       }
-
-      this.#notifier.sendSuccess(USER_MESSAGE.LOGIN_SUCCESS);
-      await this.#router.navigateByUrl(this.LOGIN_REDIRECT);
     });
   }
 
@@ -89,12 +91,12 @@ export class AuthService {
     await runInInjectionContext(this.#injector, async () => {
       try {
         await this.#auth.signOut();
+        this.#notifier.sendSuccess(USER_MESSAGE.LOGOUT_SUCCESS);
+        await this.#router.navigateByUrl(this.LOGOUT_REDIRECT);
       } catch (e) {
-        throw new Error("User logout failed", { cause: e });
+        console.error(e);
+        this.#notifier.sendError(USER_MESSAGE.LOGOUT_FAILED);
       }
-
-      this.#notifier.sendSuccess(USER_MESSAGE.LOGOUT_SUCCESS);
-      await this.#router.navigateByUrl(this.LOGOUT_REDIRECT);
     });
   }
 
@@ -106,7 +108,8 @@ export class AuthService {
       try {
         await sendEmailVerification(user);
       } catch (e) {
-        throw new Error("Email verification failed", { cause: e });
+        console.error(e);
+        this.#notifier.sendError(USER_MESSAGE.EMAIL_VERIFICATION_FAILED);
       }
     });
   }
